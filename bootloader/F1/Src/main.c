@@ -200,7 +200,7 @@ void Reset_Handler(void)
 	 * then enter HID bootloader...
 	 */
 	if ((magic_word == 0x424C) ||
-		READ_BIT(GPIOB->IDR, GPIO_IDR_IDR2) ||
+		READ_BOOT_PIN ||
 		(check_user_code(USER_PROGRAM) == false)) {
 		if (magic_word == 0x424C) {
 
@@ -233,7 +233,7 @@ void Reset_Handler(void)
 
 	/* Turn GPIO clocks off */
 	CLEAR_BIT(RCC->APB2ENR,
-		LED1_CLOCK | LED2_CLOCK | DISC_CLOCK/* | RCC_APB2ENR_IOPBEN*/);
+		LED1_CLOCK | LED2_CLOCK | DISC_CLOCK/* | RCC_APB2ENR_IOPBEN*/ | BOOT_PIN_CLOCK);
 
 	/* Setup the vector table to the final user-defined one in Flash
 	 * memory

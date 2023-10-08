@@ -81,6 +81,7 @@ generic-pa9: $(SRCS) clean gccversion build_generic-pa9 copy_generic-pa9 info si
 generic-pe5: $(SRCS) clean gccversion build_generic-pe5 copy_generic-pe5 info size
 generic-pb7: $(SRCS) clean gccversion build_generic-pb7 copy_generic-pb7 info size
 generic-pb0: $(SRCS) clean gccversion build_generic-pb0 copy_generic-pb0 info size
+kilosegment-clock: $(SRCS) clean gccversion build_kilosegment-clock copy_kilosegment-clock info size
 generic-pb12: $(SRCS) clean gccversion build_generic-pb12 copy_generic-pb12 info size
 mini-stm32v3: $(SRCS) clean gccversion build_mini-stm32v3 copy_mini-stm32v3 info size
 
@@ -167,6 +168,13 @@ build_generic-pb12: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).bin
 copy_generic-pb12: $(BIN_DIR)
 	$(ECHO) "COPY    $(BIN_DIR)/hid_generic_pb12.bin"
 	$(Q)$(CP) $(BUILD_DIR)/$(TARGET).bin $(BIN_DIR)/hid_generic_pb12.bin
+
+build_kilosegment-clock: TARGETFLAGS= -DTARGET_KILOSEGMENT_CLOCK
+build_kilosegment-clock: LINKER_SCRIPT=STM32F103C8T6.ld
+build_kilosegment-clock: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).bin
+copy_kilosegment-clock: $(BIN_DIR)
+	$(ECHO) "COPY    $(BIN_DIR)/hid_kilosegment-clock.bin"
+	$(Q)$(CP) $(BUILD_DIR)/$(TARGET).bin $(BIN_DIR)/hid_kilosegment-clock.bin
 
 build_mini-stm32v3: TARGETFLAGS= -DTARGET_MINI_STM32V3
 build_mini-stm32v3: LINKER_SCRIPT=STM32F103CBT6.ld
