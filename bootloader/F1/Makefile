@@ -173,6 +173,7 @@ build_kilosegment-clock: TARGETFLAGS= -DTARGET_KILOSEGMENT_CLOCK
 build_kilosegment-clock: LINKER_SCRIPT=STM32F103C8T6.ld
 build_kilosegment-clock: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).bin
 copy_kilosegment-clock: $(BIN_DIR)
+	xxd -i $(BUILD_DIR)/$(TARGET).bin > $(BIN_DIR)/kilosegment_clock_bootloader.h
 	$(ECHO) "COPY    $(BIN_DIR)/hid_kilosegment-clock.bin"
 	$(Q)$(CP) $(BUILD_DIR)/$(TARGET).bin $(BIN_DIR)/hid_kilosegment-clock.bin
 
@@ -217,6 +218,10 @@ size: $(BUILD_DIR)/$(TARGET).elf
 	$(Q)$(SIZE) $(BUILD_DIR)/$(TARGET).elf
 
 $(BUILD_DIR):
+	$(ECHO) "MKDIR   $@"
+	$(Q)$(MKDIR) $@
+
+$(BIN_DIR):
 	$(ECHO) "MKDIR   $@"
 	$(Q)$(MKDIR) $@
 
